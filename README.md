@@ -59,19 +59,36 @@
   <table>
     <tr>
       <td align="center">
-        <img src="example/example1.png" alt="example 1" width="280" />
+        <img src="example/image-1.png" alt="image 1" width="280" />
         <br />
         <sub>示例 1</sub>
       </td>
       <td align="center">
-        <img src="example/example2.png" alt="example 2" width="280" />
+        <img src="example/image-2.png" alt="image 2" width="280" />
         <br />
         <sub>示例 2</sub>
       </td>
       <td align="center">
-        <img src="example/example3.png" alt="example 3" width="280" />
+        <img src="example/image-3.png" alt="image 3" width="280" />
         <br />
         <sub>示例 3</sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="example/image-4.png" alt="image 4" width="280" />
+        <br />
+        <sub>示例 4</sub>
+      </td>
+      <td align="center">
+        <img src="example/image-5.png" alt="image 5" width="280" />
+        <br />
+        <sub>示例 5</sub>
+      </td>
+      <td align="center">
+        <img src="example/image-6.png" alt="image 6" width="280" />
+        <br />
+        <sub>示例 6</sub>
       </td>
     </tr>
   </table>
