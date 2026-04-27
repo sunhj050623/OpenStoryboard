@@ -1,4 +1,4 @@
-﻿import path from "node:path";
+import path from "node:path";
 import process from "node:process";
 import { homedir } from "node:os";
 import { fileURLToPath } from "node:url";
@@ -153,9 +153,9 @@ Environment variables:
   AZURE_API_VERSION         Azure API version (default: 2025-04-01-preview)
   AZURE_OPENAI_IMAGE_MODEL  Backward-compatible Azure deployment/model alias (defaults to gpt-image-1.5)
   SEEDREAM_BASE_URL         Custom Seedream endpoint
-  COPY2IMAGE_IMAGE_GEN_MAX_WORKERS  Override batch worker cap
-  COPY2IMAGE_IMAGE_GEN_<PROVIDER>_CONCURRENCY  Override provider concurrency
-  COPY2IMAGE_IMAGE_GEN_<PROVIDER>_START_INTERVAL_MS  Override provider start gap in ms
+  OPENSTORYBOARD_IMAGE_GEN_MAX_WORKERS  Override batch worker cap
+  OPENSTORYBOARD_IMAGE_GEN_<PROVIDER>_CONCURRENCY  Override provider concurrency
+  OPENSTORYBOARD_IMAGE_GEN_<PROVIDER>_START_INTERVAL_MS  Override provider start gap in ms
 
 Env file load order: CLI args > EXTEND.md > process.env > <cwd>/.env`);
 }
@@ -513,17 +513,17 @@ type ExtendConfigPathPair = {
 function getExtendConfigPathPairs(cwd: string, home: string): ExtendConfigPathPair[] {
   return [
     {
-      current: path.join(cwd, ".copy2image-workflow", "t2i-imagine", "EXTEND.md"),
+      current: path.join(cwd, ".openstoryboard", "t2i-imagine", "EXTEND.md"),
       legacy: [
-        path.join(cwd, ".copy2image-workflow", "baoyu-imagine", "EXTEND.md"),
-        path.join(cwd, ".copy2image-workflow", "baoyu-image-gen", "EXTEND.md"),
+        path.join(cwd, ".openstoryboard", "baoyu-imagine", "EXTEND.md"),
+        path.join(cwd, ".openstoryboard", "baoyu-image-gen", "EXTEND.md"),
       ],
     },
     {
-      current: path.join(home, ".copy2image-workflow", "t2i-imagine", "EXTEND.md"),
+      current: path.join(home, ".openstoryboard", "t2i-imagine", "EXTEND.md"),
       legacy: [
-        path.join(home, ".copy2image-workflow", "baoyu-imagine", "EXTEND.md"),
-        path.join(home, ".copy2image-workflow", "baoyu-image-gen", "EXTEND.md"),
+        path.join(home, ".openstoryboard", "baoyu-imagine", "EXTEND.md"),
+        path.join(home, ".openstoryboard", "baoyu-image-gen", "EXTEND.md"),
       ],
     },
   ];
@@ -617,7 +617,7 @@ export function parsePositiveBatchInt(value: unknown): number | null {
 }
 
 export function getConfiguredMaxWorkers(extendConfig: Partial<ExtendConfig>): number {
-  const envValue = parsePositiveInt(process.env.COPY2IMAGE_IMAGE_GEN_MAX_WORKERS);
+  const envValue = parsePositiveInt(process.env.OPENSTORYBOARD_IMAGE_GEN_MAX_WORKERS);
   const configValue = extendConfig.batch?.max_workers ?? null;
   return Math.max(1, envValue ?? configValue ?? DEFAULT_MAX_WORKERS);
 }
@@ -639,7 +639,7 @@ export function getConfiguredProviderRateLimits(
   };
 
   for (const provider of ["replicate", "google", "openai", "openrouter", "dashscope", "zai", "minimax", "jimeng", "seedream", "azure"] as Provider[]) {
-    const envPrefix = `COPY2IMAGE_IMAGE_GEN_${provider.toUpperCase()}`;
+    const envPrefix = `OPENSTORYBOARD_IMAGE_GEN_${provider.toUpperCase()}`;
     const extendLimit = extendConfig.batch?.provider_limits?.[provider];
     configured[provider] = {
       concurrency:

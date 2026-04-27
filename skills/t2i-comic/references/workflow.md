@@ -1,4 +1,4 @@
-﻿# Complete Workflow
+# Complete Workflow
 
 Full workflow for generating knowledge comics.
 
@@ -40,23 +40,23 @@ Check EXTEND.md existence (priority order):
 
 ```bash
 # macOS, Linux, WSL, Git Bash
-test -f .copy2image-workflow/baoyu-comic/EXTEND.md && echo "project"
-test -f "${XDG_CONFIG_HOME:-$HOME/.config}/copy2image-workflow/baoyu-comic/EXTEND.md" && echo "xdg"
-test -f "$HOME/.copy2image-workflow/baoyu-comic/EXTEND.md" && echo "user"
+test -f .openstoryboard/baoyu-comic/EXTEND.md && echo "project"
+test -f "${XDG_CONFIG_HOME:-$HOME/.config}/openstoryboard/baoyu-comic/EXTEND.md" && echo "xdg"
+test -f "$HOME/.openstoryboard/baoyu-comic/EXTEND.md" && echo "user"
 ```
 
 ```powershell
 # PowerShell (Windows)
-if (Test-Path .copy2image-workflow/baoyu-comic/EXTEND.md) { "project" }
+if (Test-Path .openstoryboard/baoyu-comic/EXTEND.md) { "project" }
 $xdg = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { "$HOME/.config" }
-if (Test-Path "$xdg/copy2image-workflow/baoyu-comic/EXTEND.md") { "xdg" }
-if (Test-Path "$HOME/.copy2image-workflow/baoyu-comic/EXTEND.md") { "user" }
+if (Test-Path "$xdg/openstoryboard/baoyu-comic/EXTEND.md") { "xdg" }
+if (Test-Path "$HOME/.openstoryboard/baoyu-comic/EXTEND.md") { "user" }
 ```
 
 | Path | Location |
 |------|----------|
-| `.copy2image-workflow/baoyu-comic/EXTEND.md` | Project directory |
-| `$HOME/.copy2image-workflow/baoyu-comic/EXTEND.md` | User home |
+| `.openstoryboard/baoyu-comic/EXTEND.md` | Project directory |
+| `$HOME/.openstoryboard/baoyu-comic/EXTEND.md` | User home |
 
 **When EXTEND.md Found** 鈫?Read, parse, **output summary to user**:
 

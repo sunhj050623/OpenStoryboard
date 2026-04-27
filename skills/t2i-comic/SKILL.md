@@ -1,10 +1,10 @@
-﻿---
+---
 name: t2i-comic
 description: Knowledge comic creator supporting multiple art styles and tones. Creates original educational comics with detailed panel layouts and sequential image generation. Use when user asks to create "鐭ヨ瘑婕敾", "鏁欒偛婕敾", "biography comic", "tutorial comic", or "Logicomix-style comic".
 version: 1.56.1
 metadata:
   openclaw:
-    homepage: https://github.com/JimLiu/copy2image-workflow#t2i-comic
+    homepage: https://github.com/JimLiu/openstoryboard#t2i-comic
     requires:
       anyBins:
         - bun
@@ -240,8 +240,8 @@ If EXTEND.md is not found, first-time setup is **blocking** 鈥?complete it befo
 
 | Priority | Path | Scope |
 |----------|------|-------|
-| 1 | `.copy2image-workflow/t2i-comic/EXTEND.md` | Project |
-| 2 | `$HOME/.copy2image-workflow/t2i-comic/EXTEND.md` | User home |
+| 1 | `.openstoryboard/t2i-comic/EXTEND.md` | Project |
+| 2 | `$HOME/.openstoryboard/t2i-comic/EXTEND.md` | User home |
 
 | Result | Action |
 |--------|--------|

@@ -1,4 +1,4 @@
-﻿---
+---
 name: first-time-setup
 description: First-time setup flow for baoyu-cover-image preferences
 ---
@@ -150,17 +150,17 @@ header: "Save"
 question: "Where to save preferences?"
 options:
   - label: "Project (Recommended)"
-    description: ".copy2image-workflow/ (this project only)"
+    description: ".openstoryboard/ (this project only)"
   - label: "User"
-    description: "~/.copy2image-workflow/ (all projects)"
+    description: "~/.openstoryboard/ (all projects)"
 ```
 
 ## Save Locations
 
 | Choice | Path | Scope |
 |--------|------|-------|
-| Project | `.copy2image-workflow/baoyu-cover-image/EXTEND.md` | Current project |
-| User | `~/.copy2image-workflow/baoyu-cover-image/EXTEND.md` | All projects |
+| Project | `.openstoryboard/baoyu-cover-image/EXTEND.md` | Current project |
+| User | `~/.openstoryboard/baoyu-cover-image/EXTEND.md` | All projects |
 
 ## After Setup
 

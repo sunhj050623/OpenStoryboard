@@ -1,4 +1,4 @@
-﻿import assert from "node:assert/strict";
+import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -195,8 +195,8 @@ test("loadExtendConfig renames legacy EXTEND.md when the new path is missing", a
   const root = await makeTempDir("baoyu-imagine-extend-");
   const cwd = path.join(root, "project");
   const home = path.join(root, "home");
-  const legacyPath = path.join(cwd, ".copy2image-workflow", "baoyu-image-gen", "EXTEND.md");
-  const currentPath = path.join(cwd, ".copy2image-workflow", "baoyu-imagine", "EXTEND.md");
+  const legacyPath = path.join(cwd, ".openstoryboard", "baoyu-image-gen", "EXTEND.md");
+  const currentPath = path.join(cwd, ".openstoryboard", "baoyu-imagine", "EXTEND.md");
 
   await fs.mkdir(path.dirname(legacyPath), { recursive: true });
   await fs.mkdir(home, { recursive: true });
@@ -218,8 +218,8 @@ test("loadExtendConfig leaves legacy EXTEND.md untouched when both paths exist",
   const root = await makeTempDir("baoyu-imagine-extend-dual-");
   const cwd = path.join(root, "project");
   const home = path.join(root, "home");
-  const legacyPath = path.join(cwd, ".copy2image-workflow", "baoyu-image-gen", "EXTEND.md");
-  const currentPath = path.join(cwd, ".copy2image-workflow", "baoyu-imagine", "EXTEND.md");
+  const legacyPath = path.join(cwd, ".openstoryboard", "baoyu-image-gen", "EXTEND.md");
+  const currentPath = path.join(cwd, ".openstoryboard", "baoyu-imagine", "EXTEND.md");
 
   await fs.mkdir(path.dirname(legacyPath), { recursive: true });
   await fs.mkdir(path.dirname(currentPath), { recursive: true });
@@ -448,10 +448,10 @@ test("detectProvider selects MiniMax when only MiniMax credentials are configure
 
 test("batch worker and provider-rate-limit configuration prefer env over EXTEND config", (t) => {
   useEnv(t, {
-    COPY2IMAGE_IMAGE_GEN_MAX_WORKERS: "12",
-    COPY2IMAGE_IMAGE_GEN_GOOGLE_CONCURRENCY: "5",
-    COPY2IMAGE_IMAGE_GEN_GOOGLE_START_INTERVAL_MS: "450",
-    COPY2IMAGE_IMAGE_GEN_ZAI_CONCURRENCY: "4",
+    OPENSTORYBOARD_IMAGE_GEN_MAX_WORKERS: "12",
+    OPENSTORYBOARD_IMAGE_GEN_GOOGLE_CONCURRENCY: "5",
+    OPENSTORYBOARD_IMAGE_GEN_GOOGLE_START_INTERVAL_MS: "450",
+    OPENSTORYBOARD_IMAGE_GEN_ZAI_CONCURRENCY: "4",
   });
 
   const extendConfig: Partial<ExtendConfig> = {

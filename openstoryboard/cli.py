@@ -1,14 +1,14 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import argparse
 import json
 from pathlib import Path
 
-from .engine import MODE_TO_SKILL, Copy2ImageWorkflowEngine, Copy2ImageRequest
+from .engine import MODE_TO_SKILL, OpenStoryboardWorkflowEngine, OpenStoryboardRequest
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Copy2Image Workflow orchestrator based on agentorch template.")
+    parser = argparse.ArgumentParser(description="OpenStoryboard orchestrator based on agentorch template.")
     sub = parser.add_subparsers(dest="command", required=True)
 
     inspect_cmd = sub.add_parser("inspect", help="Inspect integrated skills and backend locations.")
@@ -30,7 +30,7 @@ def build_parser() -> argparse.ArgumentParser:
     run_cmd.add_argument("--model")
     run_cmd.add_argument("--image-api-dialect")
     run_cmd.add_argument("--output-root", default="runs")
-    run_cmd.add_argument("--thread-id", default="copy2image-thread")
+    run_cmd.add_argument("--thread-id", default="openstoryboard-thread")
     run_cmd.add_argument("--dry-run", action="store_true")
     run_cmd.add_argument("--no-generate", action="store_true")
     run_cmd.add_argument("--no-anchor-chain", action="store_true")
@@ -54,8 +54,8 @@ def cmd_inspect(project_root: Path) -> dict[str, object]:
 
 def cmd_run(args: argparse.Namespace) -> dict[str, object]:
     project_root = Path(args.project_root).resolve()
-    engine = Copy2ImageWorkflowEngine(project_root=project_root)
-    request = Copy2ImageRequest(
+    engine = OpenStoryboardWorkflowEngine(project_root=project_root)
+    request = OpenStoryboardRequest(
         mode=args.mode,
         topic=args.topic,
         content=args.content,

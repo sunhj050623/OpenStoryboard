@@ -1,6 +1,6 @@
-﻿const LANG = window.COPY2IMAGE_LANG || "zh";
-const ALT_LANG = window.COPY2IMAGE_ALT_LANG || (LANG === "zh" ? "en" : "zh");
-const THEME_KEY = "copy2image_theme";
+const LANG = window.OPENSTORYBOARD_LANG || "zh";
+const ALT_LANG = window.OPENSTORYBOARD_ALT_LANG || (LANG === "zh" ? "en" : "zh");
+const THEME_KEY = "openstoryboard_theme";
 
 const t = {
   loading: LANG === "zh" ? "加载中..." : "Loading...",

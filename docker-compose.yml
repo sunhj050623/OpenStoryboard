@@ -1,5 +1,5 @@
 services:
-  copy2image-workflow:
+  openstoryboard:
     build:
       context: .
       dockerfile: Dockerfile

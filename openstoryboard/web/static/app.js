@@ -1,5 +1,5 @@
-﻿const i18n = window.COPY2IMAGE_I18N || {};
-const LANG = window.COPY2IMAGE_LANG || "zh";
+const i18n = window.OPENSTORYBOARD_I18N || {};
+const LANG = window.OPENSTORYBOARD_LANG || "zh";
 
 const autoLabel = i18n?.placeholders?.auto || "Auto (recommended)";
 const emptyUploadLabel = i18n?.placeholders?.upload_status_empty || "No file uploaded";
@@ -16,7 +16,7 @@ const cancelledHint = LANG === "zh" ? "任务已取消。" : "Task cancelled.";
 const sourceRequiredHint = LANG === "zh" ? "请先上传文档或切回直接输入。" : "Upload a document first or switch back to direct input.";
 const resultEmptyLabel = LANG === "zh" ? "生成结果" : "Results";
 
-const THEME_KEY = "copy2image_theme";
+const THEME_KEY = "openstoryboard_theme";
 
 let optionsByMode = {};
 let activeSource = "text";
@@ -896,7 +896,7 @@ function formToPayload(form) {
     skip_analysis_llm: checked(form, "skip_analysis_llm"),
     skip_outline_llm: checked(form, "skip_outline_llm"),
     output_root: "runs",
-    thread_id: "copy2image-web"
+    thread_id: "openstoryboard-web"
   };
 }
 
@@ -1250,7 +1250,7 @@ function wireLanguageToggle() {
   if (!btn) return;
 
   btn.addEventListener("click", async () => {
-    const target = window.COPY2IMAGE_ALT_LANG || (LANG === "zh" ? "en" : "zh");
+    const target = window.OPENSTORYBOARD_ALT_LANG || (LANG === "zh" ? "en" : "zh");
     const old = btn.textContent;
     btn.disabled = true;
     document.body.classList.add("page-switching");

@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import json
 import os
@@ -18,7 +18,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 from starlette.concurrency import run_in_threadpool
 
-from copy2image_workflow.engine import MODE_TO_SKILL, Copy2ImageWorkflowEngine, Copy2ImageRequest
+from openstoryboard.engine import MODE_TO_SKILL, OpenStoryboardWorkflowEngine, OpenStoryboardRequest
 
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parents[1]
@@ -222,11 +222,11 @@ IMAGE_CARD_PRESET_MAP = _md_table_combo_map(_SKILLS_ROOT / "t2i-image-cards" / "
 ARTICLE_PRESET_MAP = _md_table_combo_map(_SKILLS_ROOT / "t2i-article-illustrator" / "references" / "style-presets.md", 3)
 COVER_STYLE_MAP = _md_table_combo_map(_SKILLS_ROOT / "t2i-cover-image" / "references" / "style-presets.md", 2)
 
-app = FastAPI(title="Copy2Image Workflow Web", version="1.2.0")
+app = FastAPI(title="OpenStoryboard Web", version="1.2.0")
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 app.mount("/runs", StaticFiles(directory=str(RUNS_ROOT)), name="runs")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
-engine = Copy2ImageWorkflowEngine(project_root=PROJECT_ROOT)
+engine = OpenStoryboardWorkflowEngine(project_root=PROJECT_ROOT)
 _RUN_LOCK = threading.Lock()
 _SETTINGS_LOCK = threading.Lock()
 _ACTIVE_CANCEL_EVENT: threading.Event | None = None
@@ -265,7 +265,7 @@ class RunPayload(BaseModel):
     skip_analysis_llm: bool = False
     skip_outline_llm: bool = False
     output_root: str = "runs"
-    thread_id: str = "copy2image-web"
+    thread_id: str = "openstoryboard-web"
 
 
 class LangPayload(BaseModel):
@@ -293,7 +293,7 @@ class WebSettingsPayload(BaseModel):
 
 I18N: dict[str, dict[str, Any]] = {
     "zh": {
-        "title": "Copy2Image Workflow 控制台",
+        "title": "OpenStoryboard 控制台",
         "subtitle": "六种模式统一编排，白底蓝色简洁界面",
         "run_title": "运行任务",
         "result_title": "输出结果",
@@ -361,7 +361,7 @@ I18N: dict[str, dict[str, Any]] = {
         "lang_switch": "English",
     },
     "en": {
-        "title": "Copy2Image Workflow Console",
+        "title": "OpenStoryboard Console",
         "subtitle": "Unified orchestration for six modes with a clean white + blue UI",
         "run_title": "Run Task",
         "result_title": "Output",
@@ -450,17 +450,17 @@ def _default_settings() -> WebSettingsPayload:
     return WebSettingsPayload(
         text=TextModelSettings(
             api_key=_first_non_empty(
-                os.environ.get("COPY2IMAGE_WORKFLOW_TEXT_API_KEY"),
+                os.environ.get("OPENSTORYBOARD_TEXT_API_KEY"),
                 os.environ.get("T2I_AGENT_TEXT_API_KEY"),
                 os.environ.get("OPENAI_API_KEY"),
             ),
             base_url=_first_non_empty(
-                os.environ.get("COPY2IMAGE_WORKFLOW_TEXT_BASE_URL"),
+                os.environ.get("OPENSTORYBOARD_TEXT_BASE_URL"),
                 os.environ.get("T2I_AGENT_TEXT_BASE_URL"),
                 os.environ.get("OPENAI_BASE_URL"),
             ),
             model=_first_non_empty(
-                os.environ.get("COPY2IMAGE_WORKFLOW_TEXT_MODEL"),
+                os.environ.get("OPENSTORYBOARD_TEXT_MODEL"),
                 os.environ.get("T2I_AGENT_TEXT_MODEL"),
                 os.environ.get("OPENAI_TEXT_MODEL"),
                 os.environ.get("OPENAI_MODEL"),
@@ -675,7 +675,7 @@ def _template_context(lang: str) -> dict[str, Any]:
 
 
 def _resolve_lang(request: Request) -> str:
-    cookie_lang = request.cookies.get("copy2image_lang") or request.cookies.get("t2i_lang")
+    cookie_lang = request.cookies.get("openstoryboard_lang") or request.cookies.get("t2i_lang")
     if cookie_lang in I18N:
         return str(cookie_lang)
     return "zh"
@@ -696,14 +696,14 @@ async def settings_page(request: Request) -> HTMLResponse:
 @app.get("/zh", response_class=HTMLResponse, include_in_schema=False)
 async def page_zh() -> RedirectResponse:
     response = RedirectResponse(url="/")
-    response.set_cookie("copy2image_lang", "zh", max_age=31536000, samesite="lax")
+    response.set_cookie("openstoryboard_lang", "zh", max_age=31536000, samesite="lax")
     return response
 
 
 @app.get("/en", response_class=HTMLResponse, include_in_schema=False)
 async def page_en() -> RedirectResponse:
     response = RedirectResponse(url="/")
-    response.set_cookie("copy2image_lang", "en", max_age=31536000, samesite="lax")
+    response.set_cookie("openstoryboard_lang", "en", max_age=31536000, samesite="lax")
     return response
 
 
@@ -713,7 +713,7 @@ async def api_lang(payload: LangPayload) -> JSONResponse:
     if lang not in I18N:
         raise HTTPException(status_code=400, detail=f"Invalid lang: {payload.lang}")
     response = JSONResponse({"status": "ok", "lang": lang})
-    response.set_cookie("copy2image_lang", lang, max_age=31536000, samesite="lax")
+    response.set_cookie("openstoryboard_lang", lang, max_age=31536000, samesite="lax")
     return response
 
 
@@ -989,19 +989,19 @@ async def api_run(payload: RunPayload) -> dict[str, Any]:
 
     text_api_key = _first_non_empty(
         settings.text.api_key,
-        os.environ.get("COPY2IMAGE_WORKFLOW_TEXT_API_KEY"),
+        os.environ.get("OPENSTORYBOARD_TEXT_API_KEY"),
         os.environ.get("T2I_AGENT_TEXT_API_KEY"),
         os.environ.get("OPENAI_API_KEY"),
     )
     text_base_url = _first_non_empty(
         settings.text.base_url,
-        os.environ.get("COPY2IMAGE_WORKFLOW_TEXT_BASE_URL"),
+        os.environ.get("OPENSTORYBOARD_TEXT_BASE_URL"),
         os.environ.get("T2I_AGENT_TEXT_BASE_URL"),
         os.environ.get("OPENAI_BASE_URL"),
     )
     text_model = _first_non_empty(
         settings.text.model,
-        os.environ.get("COPY2IMAGE_WORKFLOW_TEXT_MODEL"),
+        os.environ.get("OPENSTORYBOARD_TEXT_MODEL"),
         os.environ.get("T2I_AGENT_TEXT_MODEL"),
         os.environ.get("OPENAI_TEXT_MODEL"),
         os.environ.get("OPENAI_MODEL"),
@@ -1023,7 +1023,7 @@ async def api_run(payload: RunPayload) -> dict[str, Any]:
     )
 
     try:
-        request_obj = Copy2ImageRequest(
+        request_obj = OpenStoryboardRequest(
             mode=mode,
             topic=topic,
             content=content,

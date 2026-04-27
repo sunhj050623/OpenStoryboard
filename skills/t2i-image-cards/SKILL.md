@@ -1,10 +1,10 @@
-﻿---
+---
 name: t2i-image-cards
 description: Generates infographic image card series with 12 visual styles, 8 layouts, and 3 color palettes. Breaks content into 1-10 cartoon-style image cards optimized for social media engagement. Use when user mentions "灏忕孩涔﹀浘鐗?, "灏忕孩涔︾鑽?, "灏忕豢涔?, "寰俊鍥炬枃", "寰俊璐村浘", "image cards", "鍥剧墖鍗＄墖", or wants social media infographic series.
 version: 1.56.1
 metadata:
   openclaw:
-    homepage: https://github.com/JimLiu/copy2image-workflow#t2i-image-cards
+    homepage: https://github.com/JimLiu/openstoryboard#t2i-image-cards
 ---
 
 # Image Card Series Generator
@@ -271,9 +271,9 @@ Check these paths in order; first hit wins:
 
 | Path | Scope |
 |------|-------|
-| `.copy2image-workflow/t2i-image-cards/EXTEND.md` | Project |
-| `${XDG_CONFIG_HOME:-$HOME/.config}/copy2image-workflow/t2i-image-cards/EXTEND.md` | XDG |
-| `$HOME/.copy2image-workflow/t2i-image-cards/EXTEND.md` | User home |
+| `.openstoryboard/t2i-image-cards/EXTEND.md` | Project |
+| `${XDG_CONFIG_HOME:-$HOME/.config}/openstoryboard/t2i-image-cards/EXTEND.md` | XDG |
+| `$HOME/.openstoryboard/t2i-image-cards/EXTEND.md` | User home |
 
 - **Found** 鈫?read, parse, print a summary (style / layout / watermark / language), continue.
 - **Not found + interactive** 鈫?run first-time setup (see `references/config/first-time-setup.md`) and save before anything else. Do NOT analyze content or ask style questions until preferences exist 鈥?this keeps first-run behavior predictable.

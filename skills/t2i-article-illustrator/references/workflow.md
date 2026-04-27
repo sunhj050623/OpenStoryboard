@@ -1,4 +1,4 @@
-﻿# Detailed Workflow Procedures
+# Detailed Workflow Procedures
 
 ## Step 1: Pre-check
 
@@ -87,17 +87,17 @@ Check preferences and existing state, then ask ALL needed questions in ONE AskUs
 
 ```bash
 # macOS, Linux, WSL, Git Bash
-test -f .copy2image-workflow/baoyu-article-illustrator/EXTEND.md && echo "project"
-test -f "${XDG_CONFIG_HOME:-$HOME/.config}/copy2image-workflow/baoyu-article-illustrator/EXTEND.md" && echo "xdg"
-test -f "$HOME/.copy2image-workflow/baoyu-article-illustrator/EXTEND.md" && echo "user"
+test -f .openstoryboard/baoyu-article-illustrator/EXTEND.md && echo "project"
+test -f "${XDG_CONFIG_HOME:-$HOME/.config}/openstoryboard/baoyu-article-illustrator/EXTEND.md" && echo "xdg"
+test -f "$HOME/.openstoryboard/baoyu-article-illustrator/EXTEND.md" && echo "user"
 ```
 
 ```powershell
 # PowerShell (Windows)
-if (Test-Path .copy2image-workflow/baoyu-article-illustrator/EXTEND.md) { "project" }
+if (Test-Path .openstoryboard/baoyu-article-illustrator/EXTEND.md) { "project" }
 $xdg = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { "$HOME/.config" }
-if (Test-Path "$xdg/copy2image-workflow/baoyu-article-illustrator/EXTEND.md") { "xdg" }
-if (Test-Path "$HOME/.copy2image-workflow/baoyu-article-illustrator/EXTEND.md") { "user" }
+if (Test-Path "$xdg/openstoryboard/baoyu-article-illustrator/EXTEND.md") { "xdg" }
+if (Test-Path "$HOME/.openstoryboard/baoyu-article-illustrator/EXTEND.md") { "user" }
 ```
 
 | Result | Action |

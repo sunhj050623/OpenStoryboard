@@ -1,10 +1,10 @@
-﻿---
+---
 name: t2i-article-illustrator
 description: Analyzes article structure, identifies positions requiring visual aids, generates illustrations with Type 脳 Style 脳 Palette three-dimension approach. Use when user asks to "illustrate article", "add images", "generate images for article", or "涓烘枃绔犻厤鍥?.
 version: 1.57.0
 metadata:
   openclaw:
-    homepage: https://github.com/JimLiu/copy2image-workflow#t2i-article-illustrator
+    homepage: https://github.com/JimLiu/openstoryboard#t2i-article-illustrator
 ---
 
 # Article Illustrator
@@ -85,9 +85,9 @@ Check EXTEND.md in priority order 鈥?the first one found wins:
 
 | Priority | Path | Scope |
 |----------|------|-------|
-| 1 | `.copy2image-workflow/t2i-article-illustrator/EXTEND.md` | Project |
-| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/copy2image-workflow/t2i-article-illustrator/EXTEND.md` | XDG |
-| 3 | `$HOME/.copy2image-workflow/t2i-article-illustrator/EXTEND.md` | User home |
+| 1 | `.openstoryboard/t2i-article-illustrator/EXTEND.md` | Project |
+| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/openstoryboard/t2i-article-illustrator/EXTEND.md` | XDG |
+| 3 | `$HOME/.openstoryboard/t2i-article-illustrator/EXTEND.md` | User home |
 
 | Result | Action |
 |--------|--------|

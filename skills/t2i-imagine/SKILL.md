@@ -1,10 +1,10 @@
-﻿---
+---
 name: t2i-imagine
 description: AI image generation with OpenAI, Azure OpenAI, Google, OpenRouter, DashScope, Z.AI GLM-Image, MiniMax, Jimeng, Seedream and Replicate APIs. Supports text-to-image, reference images, aspect ratios, and batch generation from saved prompt files. Sequential by default; use batch parallel generation when the user already has multiple prompts or wants stable multi-image throughput. Use when user asks to generate, create, or draw images.
 version: 1.57.0
 metadata:
   openclaw:
-    homepage: https://github.com/JimLiu/copy2image-workflow#t2i-imagine
+    homepage: https://github.com/JimLiu/openstoryboard#t2i-imagine
     requires:
       anyBins:
         - bun
@@ -37,14 +37,14 @@ Check these paths in order; first hit wins:
 
 | Path | Scope |
 |------|-------|
-| `.copy2image-workflow/t2i-imagine/EXTEND.md` | Project |
-| `${XDG_CONFIG_HOME:-$HOME/.config}/copy2image-workflow/t2i-imagine/EXTEND.md` | XDG |
-| `$HOME/.copy2image-workflow/t2i-imagine/EXTEND.md` | User home |
+| `.openstoryboard/t2i-imagine/EXTEND.md` | Project |
+| `${XDG_CONFIG_HOME:-$HOME/.config}/openstoryboard/t2i-imagine/EXTEND.md` | XDG |
+| `$HOME/.openstoryboard/t2i-imagine/EXTEND.md` | User home |
 
 - **Found** 鈫?load, parse, apply. If `default_model.[provider]` is null 鈫?ask model only.
 - **Not found** 鈫?run first-time setup (`references/config/first-time-setup.md`) using AskUserQuestion to collect provider + model + quality + save location. Save EXTEND.md, then continue. Do not generate images before this completes.
 
-Legacy compatibility: if `.copy2image-workflow/baoyu-image-gen/EXTEND.md` exists and the new path doesn't, the runtime renames it to `t2i-imagine`. If both exist, the runtime leaves them alone and uses the new path.
+Legacy compatibility: if `.openstoryboard/baoyu-image-gen/EXTEND.md` exists and the new path doesn't, the runtime renames it to `t2i-imagine`. If both exist, the runtime leaves them alone and uses the new path.
 
 **EXTEND.md keys**: default provider, default quality, default aspect ratio, default image size, OpenAI image API dialect, default models, batch worker cap, provider-specific batch limits. Schema: `references/config/preferences-schema.md`.
 
@@ -113,11 +113,11 @@ ${BUN_X} {baseDir}/scripts/main.ts --batchfile batch.json --jobs 4
 | `JIMENG_REGION` | Jimeng region (default `cn-north-1`) |
 | `OPENAI_IMAGE_API_DIALECT` | `openai-native` \| `ratio-metadata` |
 | `OPENROUTER_HTTP_REFERER`, `OPENROUTER_TITLE` | Optional OpenRouter attribution |
-| `COPY2IMAGE_IMAGE_GEN_MAX_WORKERS` | Override batch worker cap |
-| `COPY2IMAGE_IMAGE_GEN_<PROVIDER>_CONCURRENCY` | Per-provider concurrency (e.g., `COPY2IMAGE_IMAGE_GEN_REPLICATE_CONCURRENCY`) |
-| `COPY2IMAGE_IMAGE_GEN_<PROVIDER>_START_INTERVAL_MS` | Per-provider start-gap |
+| `OPENSTORYBOARD_IMAGE_GEN_MAX_WORKERS` | Override batch worker cap |
+| `OPENSTORYBOARD_IMAGE_GEN_<PROVIDER>_CONCURRENCY` | Per-provider concurrency (e.g., `OPENSTORYBOARD_IMAGE_GEN_REPLICATE_CONCURRENCY`) |
+| `OPENSTORYBOARD_IMAGE_GEN_<PROVIDER>_START_INTERVAL_MS` | Per-provider start-gap |
 
-**Load priority**: CLI args > EXTEND.md > env vars > `<cwd>/.copy2image-workflow/.env` > `~/.copy2image-workflow/.env`
+**Load priority**: CLI args > EXTEND.md > env vars > `<cwd>/.openstoryboard/.env` > `~/.openstoryboard/.env`
 
 ## Model Resolution
 

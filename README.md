@@ -1,6 +1,6 @@
-﻿<div align="center">
+<div align="center">
 
-# ✨ 文案成图工作流 · Copy2Image Workflow
+# ✨ 文案成图工作流 · OpenStoryboard
 
 <p>
   <strong>把文案自动变成图片产出流水线：</strong><br/>
@@ -30,7 +30,7 @@
 
 ## 📌 项目简介
 
-`Copy2Image Workflow` 是一个“从文案到图片”的自动化工作流，适合内容创作、知识传播、运营配图和教学材料生成。
+`OpenStoryboard` 是一个“从文案到图片”的自动化工作流，适合内容创作、知识传播、运营配图和教学材料生成。
 
 你提供文本，它负责把流程拆解为可执行步骤：
 
@@ -116,13 +116,13 @@ Copy-Item .env.example .env
 ### 3) 查看可用模式与后端
 
 ```bash
-python -m copy2image_workflow.cli inspect --project-root .
+python -m openstoryboard.cli inspect --project-root .
 ```
 
 ### 4) 先跑一次 dry-run（不消耗出图额度）
 
 ```bash
-python -m copy2image_workflow.cli run \
+python -m openstoryboard.cli run \
   --project-root . \
   --mode image-cards \
   --topic "AI 学习路线图" \
@@ -136,7 +136,7 @@ python -m copy2image_workflow.cli run \
 ### 5) 正式出图
 
 ```bash
-python -m copy2image_workflow.cli run \
+python -m openstoryboard.cli run \
   --project-root . \
   --mode infographic \
   --topic "智能体工程全景" \
@@ -286,9 +286,9 @@ python -m copy2image_workflow.cli run \
 
 ```env
 # 文本模型（用于分析/大纲/提示词）
-COPY2IMAGE_WORKFLOW_TEXT_API_KEY=sk-xxx
-COPY2IMAGE_WORKFLOW_TEXT_BASE_URL=https://api.openai.com/v1
-COPY2IMAGE_WORKFLOW_TEXT_MODEL=gpt-4o-mini
+OPENSTORYBOARD_TEXT_API_KEY=sk-xxx
+OPENSTORYBOARD_TEXT_BASE_URL=https://api.openai.com/v1
+OPENSTORYBOARD_TEXT_MODEL=gpt-4o-mini
 
 # 生图模型（用于最终渲染）
 OPENAI_API_KEY=sk-xxx
@@ -329,7 +329,7 @@ OPENAI_MODEL=gpt-4o-mini
 启动服务：
 
 ```bash
-uvicorn copy2image_workflow.web.app:app --host 0.0.0.0 --port 8000
+uvicorn openstoryboard.web.app:app --host 0.0.0.0 --port 8000
 ```
 
 访问地址：
@@ -353,8 +353,8 @@ uvicorn copy2image_workflow.web.app:app --host 0.0.0.0 --port 8000
 ### 构建并运行
 
 ```bash
-docker build -t copy2image-workflow:latest .
-docker run --rm -p 8001:8000 -v %cd%:/app -w /app copy2image-workflow:latest
+docker build -t openstoryboard:latest .
+docker run --rm -p 8001:8000 -v %cd%:/app -w /app openstoryboard:latest
 ```
 
 ### Compose
@@ -374,8 +374,8 @@ docker run --rm \
   -v %cd%:/app \
   -w /app \
   --entrypoint python \
-  copy2image-workflow:latest \
-  -m copy2image_workflow.cli run \
+  openstoryboard:latest \
+  -m openstoryboard.cli run \
   --project-root /app \
   --mode image-cards \
   --topic "知识卡片示例" \

@@ -1,10 +1,10 @@
-﻿---
+---
 name: t2i-infographic
 description: Generate professional infographics with 21 layout types and 21 visual styles. Analyzes content, recommends layout脳style combinations, and generates publication-ready infographics. Use when user asks to create "infographic", "淇℃伅鍥?, "visual summary", "鍙鍖?, or "楂樺瘑搴︿俊鎭ぇ鍥?.
 version: 1.56.1
 metadata:
   openclaw:
-    homepage: https://github.com/JimLiu/copy2image-workflow#t2i-infographic
+    homepage: https://github.com/JimLiu/openstoryboard#t2i-infographic
 ---
 
 # Infographic Generator
@@ -192,9 +192,9 @@ Check EXTEND.md in priority order 鈥?the first one found wins:
 
 | Priority | Path | Scope |
 |----------|------|-------|
-| 1 | `.copy2image-workflow/t2i-infographic/EXTEND.md` | Project |
-| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/copy2image-workflow/t2i-infographic/EXTEND.md` | XDG |
-| 3 | `$HOME/.copy2image-workflow/t2i-infographic/EXTEND.md` | User home |
+| 1 | `.openstoryboard/t2i-infographic/EXTEND.md` | Project |
+| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/openstoryboard/t2i-infographic/EXTEND.md` | XDG |
+| 3 | `$HOME/.openstoryboard/t2i-infographic/EXTEND.md` | User home |
 
 | Result | Action |
 |--------|--------|

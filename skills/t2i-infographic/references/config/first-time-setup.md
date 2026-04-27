@@ -1,4 +1,4 @@
-﻿---
+---
 name: first-time-setup
 description: First-time setup flow for baoyu-infographic preferences
 ---
@@ -111,19 +111,19 @@ header: "Save"
 question: "Where to save preferences?"
 options:
   - label: "Project"
-    description: ".copy2image-workflow/ (this project only)"
+    description: ".openstoryboard/ (this project only)"
   - label: "User"
-    description: "~/.copy2image-workflow/ (all projects)"
+    description: "~/.openstoryboard/ (all projects)"
 ```
 
 ## Save Locations
 
 | Choice | Path | Scope |
 |--------|------|-------|
-| Project | `.copy2image-workflow/baoyu-infographic/EXTEND.md` | Current project |
-| User | `~/.copy2image-workflow/baoyu-infographic/EXTEND.md` | All projects |
+| Project | `.openstoryboard/baoyu-infographic/EXTEND.md` | Current project |
+| User | `~/.openstoryboard/baoyu-infographic/EXTEND.md` | All projects |
 
-XDG path (`${XDG_CONFIG_HOME:-$HOME/.config}/copy2image-workflow/baoyu-infographic/EXTEND.md`) is also recognized at read time but not offered as a save target during first-time setup.
+XDG path (`${XDG_CONFIG_HOME:-$HOME/.config}/openstoryboard/baoyu-infographic/EXTEND.md`) is also recognized at read time but not offered as a save target during first-time setup.
 
 ## After Setup
 

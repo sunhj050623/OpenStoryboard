@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import asyncio
 import importlib.util
@@ -34,7 +34,7 @@ def _load_workflow_base_symbols() -> tuple[type, type, type, type]:
             break
     if base_file is None:
         base_file = repo_root / "agentorch" / "workflow" / "base.py"
-    spec = importlib.util.spec_from_file_location("copy2image_agentorch_workflow_base", base_file)
+    spec = importlib.util.spec_from_file_location("openstoryboard_agentorch_workflow_base", base_file)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"Unable to load workflow base module: {base_file}")
     module = importlib.util.module_from_spec(spec)
@@ -124,7 +124,7 @@ def now_stamp() -> str:
     return datetime.now().strftime("%Y%m%d-%H%M%S")
 
 
-class Copy2ImageRequest(BaseModel):
+class OpenStoryboardRequest(BaseModel):
     mode: WorkflowMode
     topic: str
     content: str = ""
@@ -160,7 +160,7 @@ class Copy2ImageRequest(BaseModel):
     skip_outline_llm: bool = False
 
     output_root: str | None = None
-    thread_id: str = "copy2image-thread"
+    thread_id: str = "openstoryboard-thread"
 
     @property
     def resolved_content(self) -> str:
@@ -223,7 +223,7 @@ class LLMPrompts(BaseModel):
     prompts: list[LLMPromptItem]
 
 
-class Copy2ImageWorkflowEngine:
+class OpenStoryboardWorkflowEngine:
     def __init__(self, project_root: Path | str) -> None:
         self.project_root = Path(project_root).resolve()
         self.skills_root = self.project_root / "skills"
@@ -251,19 +251,19 @@ class Copy2ImageWorkflowEngine:
         model: str | None = None,
     ) -> None:
         resolved_api_key = (api_key or "").strip() or (
-            os.environ.get("COPY2IMAGE_WORKFLOW_TEXT_API_KEY")
+            os.environ.get("OPENSTORYBOARD_TEXT_API_KEY")
             or os.environ.get("T2I_AGENT_TEXT_API_KEY")
             or os.environ.get("OPENAI_API_KEY")
             or None
         )
         resolved_base_url = (base_url or "").strip() or (
-            os.environ.get("COPY2IMAGE_WORKFLOW_TEXT_BASE_URL")
+            os.environ.get("OPENSTORYBOARD_TEXT_BASE_URL")
             or os.environ.get("T2I_AGENT_TEXT_BASE_URL")
             or os.environ.get("OPENAI_BASE_URL")
             or None
         )
         resolved_model = (model or "").strip() or (
-            os.environ.get("COPY2IMAGE_WORKFLOW_TEXT_MODEL")
+            os.environ.get("OPENSTORYBOARD_TEXT_MODEL")
             or os.environ.get("T2I_AGENT_TEXT_MODEL")
             or os.environ.get("OPENAI_TEXT_MODEL")
             or os.environ.get("OPENAI_MODEL")
@@ -322,7 +322,7 @@ class Copy2ImageWorkflowEngine:
     def _llm_json(self, *, system_prompt: str, user_prompt: str) -> dict[str, Any]:
         if not self._text_api_key:
             raise RuntimeError(
-                "COPY2IMAGE_WORKFLOW_TEXT_API_KEY (or T2I_AGENT_TEXT_API_KEY / OPENAI_API_KEY) is required for LLM-driven skill execution."
+                "OPENSTORYBOARD_TEXT_API_KEY (or T2I_AGENT_TEXT_API_KEY / OPENAI_API_KEY) is required for LLM-driven skill execution."
             )
         last_error: Exception | None = None
         for _ in range(3):
@@ -388,7 +388,7 @@ class Copy2ImageWorkflowEngine:
         return builder.build()
 
     async def _handle_router(self, node: Node, context: Context) -> dict[str, Any]:
-        request = Copy2ImageRequest.model_validate(context.state["request"])
+        request = OpenStoryboardRequest.model_validate(context.state["request"])
         if request.mode not in MODE_TO_SKILL:
             return {"status": "failed", "error": f"Unsupported mode: {request.mode}"}
         context.state["selected_mode"] = request.mode
@@ -411,7 +411,7 @@ class Copy2ImageWorkflowEngine:
         return await handler(context)
 
     async def _handle_artifact(self, node: Node, context: Context) -> dict[str, Any]:
-        request = Copy2ImageRequest.model_validate(context.state["request"])
+        request = OpenStoryboardRequest.model_validate(context.state["request"])
         run_dir = Path(context.state["run_dir"])
         render_rows = context.state.get("render_results", [])
         status = "cancelled" if bool(context.state.get("cancelled")) else "ok"
@@ -451,7 +451,7 @@ class Copy2ImageWorkflowEngine:
         return report
 
     async def _tool_prepare_workspace(self, context: Context) -> dict[str, Any]:
-        request = Copy2ImageRequest.model_validate(context.state["request"])
+        request = OpenStoryboardRequest.model_validate(context.state["request"])
         topic_slug = slugify(request.topic)
         output_root = Path(request.output_root).resolve() if request.output_root else (self.project_root / "runs")
         run_dir = output_root / request.mode / f"{topic_slug}-{now_stamp()}"
@@ -482,7 +482,7 @@ class Copy2ImageWorkflowEngine:
         }
 
     async def _tool_analyze_content(self, context: Context) -> dict[str, Any]:
-        request = Copy2ImageRequest.model_validate(context.state["request"])
+        request = OpenStoryboardRequest.model_validate(context.state["request"])
         run_dir = Path(context.state["run_dir"])
         skill_root = Path(context.state["skill_root"])
         source_text = context.state["source_text"]
@@ -550,7 +550,7 @@ class Copy2ImageWorkflowEngine:
         return {"status": "ok", "analysis_file": str(analysis_path)}
 
     async def _tool_build_outline(self, context: Context) -> dict[str, Any]:
-        request = Copy2ImageRequest.model_validate(context.state["request"])
+        request = OpenStoryboardRequest.model_validate(context.state["request"])
         skill_root = Path(context.state["skill_root"])
         run_dir = Path(context.state["run_dir"])
         skill_context = self._skill_context_text(skill_root)
@@ -649,7 +649,7 @@ class Copy2ImageWorkflowEngine:
         return {"status": "ok", "outline_file": str(outline_path), "count": len(entries)}
 
     async def _tool_build_prompts(self, context: Context) -> dict[str, Any]:
-        request = Copy2ImageRequest.model_validate(context.state["request"])
+        request = OpenStoryboardRequest.model_validate(context.state["request"])
         skill_root = Path(context.state["skill_root"])
         skill_context = self._skill_context_text(skill_root)
         run_dir = Path(context.state["run_dir"])
@@ -790,7 +790,7 @@ class Copy2ImageWorkflowEngine:
         return {"status": "ok", "prompt_count": len(prompt_files), "prompts_dir": str(prompts_dir)}
 
     async def _tool_render_images(self, context: Context) -> dict[str, Any]:
-        request = Copy2ImageRequest.model_validate(context.state["request"])
+        request = OpenStoryboardRequest.model_validate(context.state["request"])
         prompt_files: list[str] = context.state["prompt_files"]
         image_targets: list[str] = context.state["image_targets"]
         cancel_event = context.state.get("_cancel_event")
@@ -960,7 +960,7 @@ class Copy2ImageWorkflowEngine:
     ) -> list[OutlineEntry]:
         cleaned = sorted(entries, key=lambda e: e.index)
         cleaned = cleaned[:target_count]
-        fallback_sections = Copy2ImageWorkflowEngine._extract_sections(source_text)
+        fallback_sections = OpenStoryboardWorkflowEngine._extract_sections(source_text)
 
         while len(cleaned) < target_count:
             idx = len(cleaned) + 1
@@ -1014,7 +1014,7 @@ class Copy2ImageWorkflowEngine:
         return "\n".join(lines).strip() + "\n"
 
     @staticmethod
-    def _fallback_prompt(entry: dict[str, Any], request: Copy2ImageRequest) -> str:
+    def _fallback_prompt(entry: dict[str, Any], request: OpenStoryboardRequest) -> str:
         title = str(entry.get("title", "")).strip() or "Untitled scene"
         points = [str(p).strip() for p in (entry.get("points", []) or []) if str(p).strip()]
         lines = [
@@ -1055,7 +1055,7 @@ class Copy2ImageWorkflowEngine:
                 lines.append(f"  - {point}")
         if request.mode == "comic":
             lines.append("- This image must be a comic page with clear multi-panel zoning, not a single full-frame illustration.")
-            for rule in Copy2ImageWorkflowEngine._comic_panel_guidance(request.layout, request.image_count):
+            for rule in OpenStoryboardWorkflowEngine._comic_panel_guidance(request.layout, request.image_count):
                 lines.append(f"- {rule}")
             lines.append("- Keep characters visually consistent with previous pages in hairstyle, outfit, and facial traits.")
         lines.append("- Do not include any watermark, logo, publisher stamp, or signature text.")
@@ -1107,10 +1107,10 @@ class Copy2ImageWorkflowEngine:
         base_rules = layout_rules.get(selected_layout, layout_rules["standard"])
         return [*base_rules, dense_hint]
 
-    def run_sync(self, request: Copy2ImageRequest, cancel_event: threading.Event | None = None) -> dict[str, Any]:
+    def run_sync(self, request: OpenStoryboardRequest, cancel_event: threading.Event | None = None) -> dict[str, Any]:
         return asyncio.run(self.run(request, cancel_event=cancel_event))
 
-    async def run(self, request: Copy2ImageRequest, cancel_event: threading.Event | None = None) -> dict[str, Any]:
+    async def run(self, request: OpenStoryboardRequest, cancel_event: threading.Event | None = None) -> dict[str, Any]:
         workflow = self.build_workflow()
         context = Context(
             thread_id=request.thread_id,
