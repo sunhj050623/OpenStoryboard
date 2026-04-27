@@ -91,6 +91,40 @@
         <sub>示例 6</sub>
       </td>
     </tr>
+    <tr>
+      <td align="center">
+        <img src="example/image-7.png" alt="image 7" width="280" />
+        <br />
+        <sub>示例 7</sub>
+      </td>
+      <td align="center">
+        <img src="example/image-8.png" alt="image 8" width="280" />
+        <br />
+        <sub>示例 8</sub>
+      </td>
+      <td align="center">
+        <img src="example/image-9.png" alt="image 9" width="280" />
+        <br />
+        <sub>示例 9</sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="example/image-10.png" alt="image 10" width="280" />
+        <br />
+        <sub>示例 10</sub>
+      </td>
+      <td align="center">
+        <img src="example/image-11.png" alt="image 11" width="280" />
+        <br />
+        <sub>示例 11</sub>
+      </td>
+      <td align="center">
+        <img src="example/image-12.png" alt="image 12" width="280" />
+        <br />
+        <sub>示例 12</sub>
+      </td>
+    </tr>
   </table>
 </div>
 
